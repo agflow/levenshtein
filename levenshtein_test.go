@@ -51,6 +51,32 @@ func TestDist(t *testing.T) {
 	}
 }
 
+func TestDistMax(t *testing.T) {
+	var tests = []struct {
+		s1       string
+		s2       string
+		expected int
+	}{
+		{"", "", 0},
+		{"a", "a", 0},
+		{"ab", "ab", 0},
+		{"ab", "aa", 1},
+		{"ab", "aaa", 2},
+		{"a", "aa", 1},
+		{"bbb", "a", 3},
+		{"kitten", "sitting", 3},
+		{"aa", "aü", 2},
+		{"ferhat", "elmas", 4},
+		{"Nico", "nico", 1},
+		{"Türkiye", "Atatürk", 4},
+	}
+	for i, tt := range tests {
+		if got := FromBytes([]byte(tt.s1), 4).Dist([]byte(tt.s2)); got != tt.expected {
+			log(i, []string{tt.s1, tt.s2}, tt.expected, got, t)
+		}
+	}
+}
+
 func TestDistWithDifferentCosts(t *testing.T) {
 	var tests = []struct {
 		s1       string
