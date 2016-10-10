@@ -21,10 +21,10 @@ func benchmarkDistMax(max int, b *testing.B) {
 		bytesBenchmarks = append(bytesBenchmarks, []byte(bench))
 	}
 	b.StartTimer()
-	from := FromBytes([]byte(fromBenchmark), max)
+	from := FromBytes([]byte(fromBenchmark))
 	for n := 0; n < b.N; n++ {
 		for _, bench := range bytesBenchmarks {
-			from.Dist(bench)
+			from.Dist(bench, max)
 		}
 	}
 }
