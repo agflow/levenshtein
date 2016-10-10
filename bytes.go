@@ -6,11 +6,14 @@ type bytesFrom struct {
 	indelCost int
 	subCost   int
 	from      []byte
-	maxCost   int
 	costs     []int
 }
 
-func (b *bytesFrom) Dist(to []byte) int {
+// Dist calculates levenshtein distance between 'from' and 'to'.
+// If actual distance is less or equal then maxCost,
+// then function returns accurate value of it.
+// But otherwise returns value which is greater than maxCost.
+func (b *bytesFrom) Dist(to []byte, maxCost int) int {
 	l := len(b.from)
 	m := b.costs
 	for i := 1; i <= l; i++ {
@@ -26,8 +29,8 @@ func (b *bytesFrom) Dist(to []byte) int {
 				min = m[y+1]
 			}
 		}
-		if min >= b.maxCost {
-			return b.maxCost
+		if min > maxCost {
+			return min
 		}
 	}
 	return m[l]
@@ -43,18 +46,17 @@ func (b *bytesFrom) mkSubCost(b1, b2 byte) int {
 // BytesFrom computes distance from one byte array to other byte arrays.
 // Instances should not be used concurrently.
 type BytesFrom interface {
-	Dist(to []byte) int
+	Dist(to []byte, maxCost int) int
 }
 
 // FromBytes return BytesFrom for a given bytes array
-func FromBytes(from []byte, maxCost int) BytesFrom {
+func FromBytes(from []byte) BytesFrom {
 	l := len(from)
 	m := make([]int, l+1)
 	return &bytesFrom{
 		indelCost: 1,
 		subCost:   1,
 		from:      from,
-		maxCost:   maxCost,
 		costs:     m,
 	}
 }

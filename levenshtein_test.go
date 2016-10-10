@@ -66,13 +66,27 @@ func TestDistMax(t *testing.T) {
 		{"bbb", "a", 3},
 		{"kitten", "sitting", 3},
 		{"aa", "aü", 2},
-		{"ferhat", "elmas", 4},
 		{"Nico", "nico", 1},
-		{"Türkiye", "Atatürk", 4},
 	}
 	for i, tt := range tests {
-		if got := FromBytes([]byte(tt.s1), 4).Dist([]byte(tt.s2)); got != tt.expected {
+		if got := FromBytes([]byte(tt.s1)).Dist([]byte(tt.s2), 4); got != tt.expected {
 			log(i, []string{tt.s1, tt.s2}, tt.expected, got, t)
+		}
+	}
+}
+
+func TestExceedMaxCost(t *testing.T) {
+	var tests = []struct {
+		s1      string
+		s2      string
+		maxCost int
+	}{
+		{s1: "Ferhat", s2: "Elmas", maxCost: 4},
+		{s1: "Türkiye", s2: "Atatürk", maxCost: 4},
+	}
+	for _, tt := range tests {
+		if got := FromBytes([]byte(tt.s1)).Dist([]byte(tt.s2), tt.maxCost); got <= tt.maxCost {
+			t.Errorf("Test case %v. Expected value greater then: %d, got: %d", []string{tt.s1, tt.s2}, tt.maxCost, got)
 		}
 	}
 }
