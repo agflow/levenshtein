@@ -1,20 +1,20 @@
 # Levenshtein Distance in Golang
 
-[![Godoc](http://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/AgFlow/levenshtein)
-[![Build Status](https://travis-ci.org/AgFlow/levenshtein.png?branch=master)](https://travis-ci.org/AgFlow/levenshtein)
+[![Godoc](http://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/agflow/levenshtein)
+[![Build Status](https://travis-ci.org/agflow/levenshtein.png?branch=master)](https://travis-ci.org/agflow/levenshtein)
 
 > Calculate levenshtein distance in Golang.
 
 ## Install
 
-By go tool: `go get github.com/AgFlow/levenshtein`
+By go tool: `go get github.com/agflow/levenshtein`
 
 ## Usage
 
 This uses default calculator which has cost of 1 for additions, deletions and substitutions.
 
 ```go
-import github.com/AgFlow/levenshtein
+import github.com/agflow/levenshtein
 
 levenshtein.Dist("aaa", "ab") // 2
 ```
@@ -45,4 +45,4 @@ d.Dist([]byte("Mustfa")) // 1
 
 ## LICENSE
 
-MIT © [AgFlow](https://github.com/AgFlow)
+MIT © [AgFlow](https://github.com/agflow)
